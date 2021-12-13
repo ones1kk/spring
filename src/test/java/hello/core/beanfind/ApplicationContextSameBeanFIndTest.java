@@ -1,9 +1,7 @@
 package hello.core.beanfind;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import hello.core.AppConfig;
-import hello.core.discount.DiscountPolicy;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import java.util.Map;
