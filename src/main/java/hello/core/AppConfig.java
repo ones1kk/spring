@@ -41,4 +41,3 @@ public class AppConfig {
 //        return new FixDiscountPolicy();
     }
 }
-
