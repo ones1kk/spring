@@ -2,7 +2,6 @@ package hello.core;
 
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
-import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -26,8 +25,8 @@ public class AppConfig {
     @Bean
     public OrderService orderService() {
         System.out.println("call AppConfig.orderService");
-        return null;
-//        return new OrderServiceImpl(memberRepository(), discountPolicy());
+//        return null;
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
     @Bean
