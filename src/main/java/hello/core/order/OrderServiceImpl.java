@@ -4,7 +4,6 @@ import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +16,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOder(Long memberId, String itemName, int itemPrice) {
-        Member member = memberRepository.fidById(memberId);
+        Member member = memberRepository.findById(memberId);
         int discountPrice = discountPolicy.discount(member, itemPrice);
         return new Order(memberId, itemName, itemPrice, discountPrice);
     }
