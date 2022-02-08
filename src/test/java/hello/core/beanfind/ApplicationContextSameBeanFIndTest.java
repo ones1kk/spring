@@ -19,32 +19,30 @@ public class ApplicationContextSameBeanFIndTest {
         SampleConfig.class);
 
     @Test
-    @DisplayName("타입으로 조회시 같은 타입이 둘 이상 있으면, 중복 오류가 발생한다.")
+    @DisplayName("타입으로 조회시 같은 타입이 둘 이상 있으면, 중복 오류가 발생한다")
     void findBeanByTypeDuplicate() {
         Assertions.assertThrows(NoUniqueBeanDefinitionException.class,
             () -> ac.getBean(MemberRepository.class));
-
     }
 
     @Test
     @DisplayName("타입으로 조회시 같은 타입이 둘 이상 있으면, 빈 이름을 지정하면 된다")
     void findBeanByName() {
-        MemberRepository bean = ac.getBean("memberRepository1", MemberRepository.class);
-        assertThat(bean).isInstanceOf(MemberRepository.class);
-
+        MemberRepository memberRepository = ac.getBean("memberRepository1", MemberRepository.class);
+        assertThat(memberRepository).isInstanceOf(MemberRepository.class);
     }
 
     @Test
     @DisplayName("특정 타입을 모두 조회하기")
-        // cmd + shift + enter = Complete Current Statement
-    void findAllBeanType() {
+    void findAllBeanByType() {
         Map<String, MemberRepository> beansOfType = ac.getBeansOfType(MemberRepository.class);
-        beansOfType.forEach((k, v) -> System.out.println("key = " + k + " value = " + v));
+        for (String key : beansOfType.keySet()) {
+            System.out.println("key = " + key + " value = " + beansOfType.get(key));
+        }
 
         System.out.println("beansOfType = " + beansOfType);
         assertThat(beansOfType.size()).isEqualTo(2);
     }
-
 
     @Configuration
     static class SampleConfig {
