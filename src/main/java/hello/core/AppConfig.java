@@ -1,41 +1,30 @@
 package hello.core;
 
-import hello.core.discount.DiscountPolicy;
-import hello.core.discount.RateDiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
+import hello.core.member.MemberService;
+import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
 
-    // @Bean memberService -> new MemoryMemberRepository()
-    // @Bean orderService -> new MemoryMemberRepository()
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
 
-//    @Bean
-//    public MemberService memberService() {
-//        System.out.println("call AppConfig.memberService");
-//        return new MemberServiceImpl(memberRepository());
-//    }
+    public OrderService orderService() {
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
 
-//    @Bean
-//    public OrderService orderService() {
-//        System.out.println("call AppConfig.orderService");
-////        return null;
-//        return new OrderServiceImpl(memberRepository(), discountPolicy());
-//    }
-
-    @Bean
-    public MemoryMemberRepository memberRepository() {
-        System.out.println("call AppConfig.memberRepository");
+    private MemoryMemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
-    @Bean
-    public DiscountPolicy discountPolicy() {
-        return new RateDiscountPolicy();
-//        return new FixDiscountPolicy();
+    private FixDiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
     }
+
 }

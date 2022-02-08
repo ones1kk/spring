@@ -1,14 +1,12 @@
 package hello.core.member;
 
-//@Component
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
 
-//    @Autowired // ac.getBean(MemberRepository.class)
-//    public MemberServiceImpl(MemberRepository memberRepository) {
-//        this.memberRepository = memberRepository;
-//    }
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public void join(Member member) {
@@ -20,8 +18,4 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(memberId);
     }
 
-    // @Test
-//    public MemberRepository getMemberRepository() {
-//        return memberRepository;
-//    }
 }
