@@ -12,15 +12,15 @@ public class BeanDefinitionTest {
 
     @Test
     @DisplayName("빈 설정 메타정보 확인")
-    void findApplication() {
+    void findApplicationBean() {
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
         for (String beanDefinitionName : beanDefinitionNames) {
             BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
 
-            if (beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION) {
-                System.out.println("beanDefinitionName = " + beanDefinitionName +
-                    "beanDefinition = " + beanDefinition);
+            if(beanDefinition.getRole() == beanDefinition.ROLE_APPLICATION) {
+                System.out.println("beanDefinition = " + beanDefinition + " beanDefinition = " + beanDefinition);
             }
         }
     }
+
 }
