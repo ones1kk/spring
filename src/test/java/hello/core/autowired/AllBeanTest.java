@@ -1,13 +1,12 @@
 package hello.core.autowired;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import hello.core.AutoAppConfig;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Grade;
 import hello.core.member.Member;
 import java.util.List;
 import java.util.Map;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -16,22 +15,24 @@ public class AllBeanTest {
 
     @Test
     void findAllBean() {
-        ApplicationContext ac = new
-            AnnotationConfigApplicationContext(AutoAppConfig.class, DiscountService.class);
+        ApplicationContext ac = new AnnotationConfigApplicationContext(
+            AutoAppConfig.class, DiscountService.class);
+
         DiscountService discountService = ac.getBean(DiscountService.class);
         Member member = new Member(1L, "userA", Grade.VIP);
-        int fixDiscountPrice = discountService.discount(member, 10000,
-            "fixDiscountPolicy");
-        assertThat(discountService).isInstanceOf(DiscountService.class);
-        assertThat(fixDiscountPrice).isEqualTo(1000);
+        int discountPrice1 = discountService.discount(member, 1000 , "fixDiscountPolicy");
 
-        int rateDiscountPolicy = discountService.discount(member, 20000, "rateDiscountPolicy");
-        assertThat(rateDiscountPolicy).isEqualTo(2000);
+        Assertions.assertThat(discountService).isInstanceOf(DiscountService.class);
+        Assertions.assertThat(discountPrice1).isEqualTo(1000);
+
+        int discountPrice2 = discountService.discount(member, 1000 , "rateDiscountPolicy");
+        Assertions.assertThat(discountPrice2).isEqualTo(100);
     }
 
     static class DiscountService {
 
         private final Map<String, DiscountPolicy> policyMap;
+
         private final List<DiscountPolicy> policies;
 
         public DiscountService(Map<String, DiscountPolicy> policyMap,
@@ -44,9 +45,8 @@ public class AllBeanTest {
 
         public int discount(Member member, int price, String discountCode) {
             DiscountPolicy discountPolicy = policyMap.get(discountCode);
-            System.out.println("discountCode = " + discountCode);
-            System.out.println("discountPolicy = " + discountPolicy);
             return discountPolicy.discount(member, price);
         }
     }
+
 }
