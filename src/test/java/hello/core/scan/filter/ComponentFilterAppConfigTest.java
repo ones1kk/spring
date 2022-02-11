@@ -1,8 +1,6 @@
 package hello.core.scan.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -16,12 +14,13 @@ public class ComponentFilterAppConfigTest {
     void filterScan() {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(
             ComponentFilterAppConfig.class);
-        ComponentFilterAppConfig beanA = ac.getBean(ComponentFilterAppConfig.class);
 
-        assertThat(beanA).isNotNull();
+        BeanA beanA = ac.getBean("beanA", BeanA.class);
+        Assertions.assertThat(beanA).isNotNull();
 
-        assertThrows(NoSuchBeanDefinitionException.class,
+        org.junit.jupiter.api.Assertions.assertThrows(NoSuchBeanDefinitionException.class,
             () -> ac.getBean("beanB", BeanB.class));
+
     }
 
     @Configuration
