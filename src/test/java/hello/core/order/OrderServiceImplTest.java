@@ -13,11 +13,11 @@ public class OrderServiceImplTest {
     void createOrder() {
         MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
         memoryMemberRepository.save(new Member(1L, "userA", Grade.VIP));
-        OrderServiceImpl orderService = new OrderServiceImpl(memoryMemberRepository, new FixDiscountPolicy());
+        OrderServiceImpl orderService = new OrderServiceImpl(memoryMemberRepository,
+            new FixDiscountPolicy());
         Order order = orderService.createOder(1L, "itemA", 10000);
 
         Member findMember = memoryMemberRepository.findById(1L);
-
 
         Assertions.assertThat(order.getMemberId()).isSameAs(findMember.getId());
     }

@@ -12,7 +12,7 @@ public class PrototypeTest {
 
 
     @Test
-    void prototypeBeanFind(){
+    void prototypeBeanFind() {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(
             PrototypeBean.class);
 
@@ -34,15 +34,15 @@ public class PrototypeTest {
     }
 
     @Scope("prototype")
-    static class PrototypeBean{
+    static class PrototypeBean {
 
         @PostConstruct
-        public void init(){
+        public void init() {
             System.out.println("PrototypeBean.init");
         }
 
         @PreDestroy
-        public void destroy(){
+        public void destroy() {
             System.out.println("PrototypeBean.destroy");
         }
     }

@@ -48,7 +48,6 @@ public class SingletonTest {
         ApplicationContext ac = new AnnotationConfigApplicationContext(
             AppConfig.class);
 
-
 //        MemberService memberService1 = appConfig.memberService();
         MemberService memberService1 = ac.getBean("memberService", MemberService.class);
 

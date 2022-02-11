@@ -26,15 +26,15 @@ public class SingletonTest {
     }
 
     @Scope("singleton")
-    static class SingletonBean{
+    static class SingletonBean {
 
         @PostConstruct
-        public void init(){
+        public void init() {
             System.out.println("SingletonBean.init");
         }
 
         @PreDestroy
-        public void destroy(){
+        public void destroy() {
             System.out.println("SingletonBean.destroy");
         }
     }
