@@ -1,5 +1,8 @@
 package hello.core.lifecycle;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class NetworkClient {
 
     private String url;
@@ -26,5 +29,26 @@ public class NetworkClient {
     // 서비스 종료시 호출
     public void disconnect() {
         System.out.println("close : " + url);
+    }
+
+    // 의존관계 주입이 끝나면...
+    public void afterPropertiesSet() throws Exception {
+        connect();
+        call("초기 연결 메세지");
+    }
+
+    public void destroy() throws Exception {
+        disconnect();
+    }
+
+    @PostConstruct
+    public void init() {
+        connect();
+        call("초기 연결 메세지");
+    }
+
+    @PreDestroy
+    public void close() {
+        disconnect();
     }
 }
