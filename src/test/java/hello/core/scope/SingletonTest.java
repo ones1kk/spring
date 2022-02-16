@@ -23,6 +23,7 @@ public class SingletonTest {
         Assertions.assertThat(bean1).isSameAs(bean2);
 
         ac.close();
+
     }
 
     @Scope("singleton")
@@ -38,4 +39,5 @@ public class SingletonTest {
             System.out.println("SingletonBean.destroy");
         }
     }
+
 }
