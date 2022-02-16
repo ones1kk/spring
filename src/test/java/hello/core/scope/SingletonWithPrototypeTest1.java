@@ -6,16 +6,16 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
 
 public class SingletonWithPrototypeTest1 {
 
     @Test
-    void protoTypeFind() {
+    void prototypeFind() {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(
             PrototypeBean.class);
+
         PrototypeBean bean1 = ac.getBean(PrototypeBean.class);
         bean1.addCount();
         assertThat(bean1.getCount()).isEqualTo(1);
@@ -27,32 +27,33 @@ public class SingletonWithPrototypeTest1 {
     }
 
     @Test
-    void singletonClientUserPrototype() {
+    void singletonClientUserProtoType() {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(
             ClientBean.class, PrototypeBean.class);
 
-        ClientBean clientBean1 = ac.getBean(ClientBean.class);
-        int count1 = clientBean1.logic();
+        ClientBean bean1 = ac.getBean(ClientBean.class);
+        int count1 = bean1.logic();
         assertThat(count1).isEqualTo(1);
 
-        ClientBean clientBean2 = ac.getBean(ClientBean.class);
-        int count2 = clientBean2.logic();
-        assertThat(count2).isEqualTo(1);
+        ClientBean bean2 = ac.getBean(ClientBean.class);
+        int count2 = bean1.logic();
+        assertThat(count2).isEqualTo(2);
+
     }
 
     @Scope("singleton")
     @RequiredArgsConstructor
     static class ClientBean {
 
-        private final ObjectProvider<PrototypeBean> provider;
+        private final PrototypeBean prototypeBean;
 
-//        private final Provider<PrototypeBean> provider;
 
         public int logic() {
-            PrototypeBean prototypeBean = provider.getObject();
             prototypeBean.addCount();
             return prototypeBean.getCount();
         }
+
+
     }
 
     @Scope("prototype")
@@ -69,8 +70,8 @@ public class SingletonWithPrototypeTest1 {
         }
 
         @PostConstruct
-        public void innit() {
-            System.out.println("PrototypeBean.innit" + this);
+        public void init() {
+            System.out.println("PrototypeBean.init = " + this);
         }
 
         @PreDestroy
